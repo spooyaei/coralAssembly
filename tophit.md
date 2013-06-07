@@ -1,6 +1,6 @@
 coralAssembly
 =============
-This is a perl script used for assembly and annotation of coral transcriptome.
+This files have been used for ssembly and annotation of coral transcriptome.
 ==============
 
 
