@@ -1,53 +1,6 @@
-#!/usr/bin/perl -w
+perl -e '$count=0; $len=0; while(<>) {s/\r?\n//; s/\t/ /g; if (s/^>//) { if ($. != 1) {print "\n"} s/ |$/\t/; $count++; $_ .= "\t";} else {s/ //g; $len += length($_)} print $_;} print "\n"; warn "\nConverted $count FASTA records in $. lines to tabular format\nTotal sequence length: $len\n\n";' seq1-contig.fasta > seq1-contig.fasta.tab
+perl -e '$col = 2;' -e 'while (<>) { s/\r?\n//; @F = split /\t/, $_; $len = length($F[$col]); print "$_\t$len\n" } warn "\nAdded column with length of column $col for $. lines.\n\n";' seq1-contig.fasta.tab > seq1-contig.fasta_length.tab
+perl -e '$col=3; $limit=150; while(<>) {BEGIN {$count=0} s/\r?\n//; @F=split /\t/, $_; if ($F[$col] > $limit) {$count++; print "$_\n"}} warn "\nChose $count lines out of $..\n\n"' seq1-contig.fasta_length.tab > seq1_withlong150contig.tab
+perl -e '@cols=(0, 1, 2); while(<>) {s/\r?\n//; @F=split /\t/, $_; print join("\t", @F[@cols]), "\n"} warn "\nJoined columns ", join(", ", @cols), " for $. lines\n\n"' seq1_withlong150contig.tab> seq1_withlong150contig.3col.tab
+perl -e '$len=0; while(<>) {s/\r?\n//; @F=split /\t/, $_; print ">$F[0]"; if (length($F[1])) {print " $F[1]"} print "\n"; $s=$F[2]; $len+= length($s); $s=~s/.{60}(?=.)/$&\n/g; print "$s\n";} warn "\nConverted $. tab-delimited lines to FASTA format\nTotal sequence length: $len\n\n";'  seq1_withlong150contig.3col.tab >  seq1_withlong150contig.fasta
 
-# Written by Shaadi P.Mehr on Thursday 11:00 A.M.2011.
-## Goal-- to generate small fasta files from a biger fasta file
-### based on the given Id list in a new text file
-
-##Usage  ./getsubfasta.pl  list.txt sam23.orf.txt 
-
-use warnings;
-use strict;
-use Bio::SeqIO;
-use Bio::SearchIO;
-my $idsfile = shift @ARGV ; # ID to extract 
-my $seqfile = "eel31transabyscontigjul23.fas  ";
-my %ids  = ();
-
-
-open IN, $idsfile;
-while(<IN>) {
-
-  chomp;
-  $ids{$_} += 1;
-
-}
-close IN;
-
-local $/ = "\n>";  # read by FASTA record
-
-
-open FASTA, $seqfile;
-while (<FASTA>) {
-
-    chomp;
-    my $seq = $_;
-
-    my ($id) = $seq =~ /^>*(\S+)/;  # parse ID as first word in FASTA header
- 
-
-# my $aa_desc = $seq->desc();
- # $aa_desc =~ s/\[//
-#my $desc=~ split (/\-/, $seq);
- if (exists($ids{$id})) {
-
-       # $seq =~ s/^>*.+\n//;  # remove FASTA header
-       # $seq =~ s/\n//g;  # remove endlines
-
-        print ">$seq\n";
-   
- 
-
-}
-}
-close FASTA;
