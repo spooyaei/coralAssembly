@@ -1,6 +1,6 @@
 coralAssembly
 =============
-This files have been used for ssembly and annotation of coral transcriptome.
+These files have been used for assembly and annotation of the coral transcriptome.
 ==============
 
 
