@@ -34,7 +34,7 @@ Included files:
   Takes the amino acid predition fasta file from getorf. It extracts the corresponding regions in the original cDNA Nucleotide 
   file. 
 
-  blast.config: 
+  config_BlastP-e5: Config file to run blastP
   
   bowtie.config:
   
