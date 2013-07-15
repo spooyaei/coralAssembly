@@ -36,7 +36,7 @@ Included files:
 
   config_BlastP-e5: Config file to run blastP
   
-  bowtie.config:
+  bowtie_config: Config file to run perl implemented bowtie to calculate FPKM
   
   External Dependencies:
    Perl  
