@@ -1,0 +1,1 @@
+PARAMETERS=-p 8 -t -a --best --chunkmbs 500 -y
