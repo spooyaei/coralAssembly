@@ -1,0 +1,1 @@
+PARAMETERS= -p blastp -a 4 -e 2e-05
